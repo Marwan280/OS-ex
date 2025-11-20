@@ -1,0 +1,66 @@
+
+Exercise 1 – Using fork() in C
+The example program demonstrates how processes are created in Linux using the fork() system call.
+fork() creates a new child process by duplicating the calling (parent) process.
+- If fork() returns 0 → this is the child process
+- If fork() returns a positive number → this is the parent process
+- If fork() returns -1 → process creation failed
+
+The child and parent run their own copy of the program independently.
+Each prints its own PID using getpid().
+
+When compiling:
+    gcc fork_example.c -o fork_example
+Running:
+    ./fork_example
+
+
+
+Exercise 2 – Role of the Linker
+
+In this exercise, we compile two separate files:
+
+file1.c contains:
+    void hello() {
+        printf("Hello from file1!\n");
+    }
+
+file2.c contains main() and calls hello().
+
+When we compile:
+    gcc file1.c file2.c -o linker_example
+
+The compiler first creates object files (.o files),
+then the linker combines them into one executable.
+
+Job of the Linker:
+- Combines multiple object files
+- Resolves external symbols (e.g., hello() from file1.c called in file2.c)
+- Produces the final executable program
+
+Modifying any .c file and recompiling changes how the linker combines code.
+
+
+Exercise 3 – Role of the Loader
+
+This exercise uses a simple C program:
+
+    printf("This is a simple program.\n");
+
+Compile it:
+    gcc simple_program.c -o simple_program
+
+To inspect its dynamic libraries:
+    ldd simple_program
+
+The Loader:
+- Loads the program into memory when executed
+- Loads required shared libraries (.so files)
+- Prepares the program for execution
+- Sets up memory segments (stack, heap, code)
+- Starts the execution at the entry point (main)
+
+The output of ldd shows which libraries are dynamically loaded, such as:
+- libc.so (standard C library)
+- ld-linux.so (dynamic loader)
+- others used by the program
